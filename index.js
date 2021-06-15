@@ -22,7 +22,7 @@ client.connect(err => {
     app.get('/products', (req, res) => {
         productCollection.find()
             .toArray((err, items) => {
-                res.send(items)
+                res.send('from db',items)
             })
     })
 
@@ -36,7 +36,7 @@ client.connect(err => {
             })
     })
 
-    app.post('/product/:id', (req, res) => {
+    app.post('/products/:id', (req, res) => {
         console.log(req.params.id);
         productCollection.find({ _id: ObjectId(req.params.id) })
             .toArray((err, items) => {
@@ -47,7 +47,7 @@ client.connect(err => {
 
     app.post('/addOrder', (req, res) => {
         const newOrder = req.body;
-        console.log('samsul',newOrder);
+        console.log('shahinoor',newOrder);
         orderCollection.insertOne(newOrder)
         .then(result => {
             console.log(result);
