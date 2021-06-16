@@ -5,24 +5,23 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config()
 const app = express()
-const port = process.env.PORT || 5500
+const port = process.env.PORT || 5050
 app.use(cors());
-app.use(bodyParser.json());
-
+app.use(experss.json());
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wklhy.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const uri =`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.b1fcg.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
+    console.log(err);
     const productCollection = client.db("shop").collection("products");
     const orderCollection = client.db("shop").collection("orders");
-
     app.get('/products', (req, res) => {
         productCollection.find()
             .toArray((err, items) => {
-                res.send('from db',items)
+                res.send(items)
             })
     })
 
