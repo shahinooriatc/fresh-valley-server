@@ -7,10 +7,10 @@ require('dotenv').config()
 const app = express()
 const port = process.env.PORT || 5050
 app.use(cors());
-app.use(experss.json());
+app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Hello World!')
-})
+});
 
 const uri =`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.b1fcg.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -23,7 +23,7 @@ client.connect(err => {
             .toArray((err, items) => {
                 res.send(items)
             })
-    })
+    });
 
     app.post('/addProduct', (req, res) => {
         const newProduct = req.body;
@@ -33,7 +33,7 @@ client.connect(err => {
             .then(result => {
                 console.log('inserted count', result.insertedCount);
             })
-    })
+    });
 
     app.post('/products/:id', (req, res) => {
         console.log(req.params.id);
@@ -42,7 +42,7 @@ client.connect(err => {
                 res.send(items);
                 console.log(items);
             })
-    })
+    });
 
     app.post('/addOrder', (req, res) => {
         const newOrder = req.body;
@@ -53,7 +53,7 @@ client.connect(err => {
         })
 
 
-    })
+    });
 
     app.get('/orders', (req, res) => {
         console.log(req.query.email);
@@ -61,7 +61,7 @@ client.connect(err => {
         .toArray((err, items) => {
             res.send(items);
         })
-    })
+    });
 
     app.delete('/delete/:id', (req, res) => {
         console.log(req.params.id);
